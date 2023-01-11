@@ -36,12 +36,12 @@ def applyDir():
 app = QApplication([])
 window = QWidget()
 window.setWindowTitle("Trash Classification - Prethesis")
-window.setGeometry(QRect(0,0, 1080, 720))
+window.setGeometry(QRect(0,0, 960, 720))
 
 preview=QLabel()
 preview.setPixmap(QPixmap(root + '\\data\\unseen\\metal1.jpg'))
 preview.setScaledContents(True)
-preview.setStyleSheet("QLabel { background-color: black; border: 2px dashed red; max-width: 450px; max-height: 450px}")
+preview.setStyleSheet("QLabel { background-color: black; border: 2px dashed red; height: 450px; aspect-ratio: 3 / 2; max-width: 600px;}")
 
 dirText=QLabel()
 dirText.setText('Current dir: '+ root + '\\data\\unseen\\metal1.jpg')
@@ -49,16 +49,16 @@ dirText.setStyleSheet("QLabel { color: black; font-size: 28px; padding: 10px;  b
 dirText.setScaledContents(True)
 
 pred=QLabel("Empty")
-pred.setStyleSheet("QLabel { color: black; font-size: 48px; padding: 10px; border-radius: 8px; width: 100%;}")
+pred.setStyleSheet("QLabel { color: black; font-size: 36px; padding: 10px; border-radius: 8px;}")
 pred.setScaledContents(True)
 predict()
 
 dirButton=QPushButton("Choose image")
-dirButton.setStyleSheet("QPushButton { background: ##F3F3ED; font-size: 36px; padding: 10px 0; border-radius: 8px; text-align: center; text-decoration: underline; width: 100px; height: 60px;}")
+dirButton.setStyleSheet("QPushButton { background: ##F3F3ED; font-size: 36px; padding: 10px 0; border-radius: 8px; text-align: center; text-decoration: underline; width: fit-content; height: 60px;}")
 dirButton.clicked.connect(applyDir)
 
 predictButton=QPushButton("Predict")
-predictButton.setStyleSheet("QPushButton { background: ##F3F3ED; font-size: 36px; padding: 10px 0; border-radius: 8px; text-align: center; width: 100%; height: 60px;}")
+predictButton.setStyleSheet("QPushButton { background: ##F3F3ED; font-size: 36px; padding: 10px 0; border-radius: 8px; text-align: center; width: 60px; height: 60px;}")
 predictButton.clicked.connect(predict)
 
 predictClass=QLabel("Predict Class")
@@ -66,13 +66,13 @@ predictClass.setStyleSheet("QLabel { font-size: 36px; padding: 10px; border-radi
 predictClass.setScaledContents(True)
 
 layout = QGridLayout()
-layout.addWidget(preview, 0, 0, 2, 2)
-layout.addWidget(predictClass, 0, 3, 1, 1)
-layout.addWidget(pred, 1, 3, 1, 1)
-layout.addWidget(predictButton, 2, 0, 1, 2)
-layout.addWidget(dirButton, 2, 2, 1, 2)
-layout.addWidget(dirText, 3, 0, 1, 4)
-layout.addWidget(QLabel('Prethesis: Trash classification by Pham Cong Tuan ITITIU19060'), 4,0,1,4)
+layout.addWidget(preview, 0, 0, 2, 1)
+layout.addWidget(predictClass, 0, 1)
+layout.addWidget(pred, 1, 1)
+layout.addWidget(predictButton, 2, 0)
+layout.addWidget(dirButton, 2, 1)
+layout.addWidget(dirText, 3, 0, 1, 2)
+layout.addWidget(QLabel('Prethesis: Trash classification by Pham Cong Tuan ITITIU19060'), 4,0,1,2)
 
 window.setLayout(layout)
 window.show()

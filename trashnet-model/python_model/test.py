@@ -13,6 +13,25 @@ import helper
 
 root=str(os.path.dirname(os.path.abspath(__file__)))
 
+#Define model architecture & load the weight
+count=0
+categories={0: 'cardboard', 1: 'fabric', 2: 'glass', 3: 'metal', 4: 'paper', 5: 'plastic'}
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model = models.mobilenet_v2(pretrained=True, progress=True)
+for i in model.children():
+  count+=1
+  if(count < 15):
+    for param in i:
+      param.requires_grad=False
+model.classifier[1] = nn.Sequential(nn.Linear(1280, 6))
+model_addon=nn.Sequential()
+model=nn.Sequential(model_addon, model)
+model.to(device)
+state=torch.load(root+'\\trashfinal2.pth', map_location=device)
+model.load_state_dict(state, strict=False)
+model.eval()
+
+
 def predict(dir=root+'\\data\\dataset'):
    global root
    count=0
@@ -65,26 +84,7 @@ def predict(dir=root+'\\data\\dataset'):
    return idx2class[pred_class], idx2class[single_lbl.item()], single_img
 
 def predictSingleUnseen(imgdir):
-   global root
-   count=0
-   categories={0: 'cardboard', 1: 'fabric', 2: 'glass', 3: 'metal', 4: 'paper', 5: 'plastic'}
-   device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-   #Define model architecture & load the weight
-   model = models.mobilenet_v2(pretrained=True, progress=True)
-   for i in model.children():
-     count+=1
-     if(count < 15):
-       for param in i:
-         param.requires_grad=False
-   model.classifier[1] = nn.Sequential(nn.Linear(1280, 6))
-   model_addon=nn.Sequential()
-   model=nn.Sequential(model_addon, model)
-   model.to(device)
-   state=torch.load(root+'\\trashfinal2.pth', map_location=device)
-   model.load_state_dict(state, strict=False)
-   model.eval()
-
+   global root, model, device
    #Test dataset
    image_transforms =  transforms.Compose([transforms.Resize((250, 250)),transforms.ToTensor()])
    image = image_transforms(Image.open(imgdir)).unsqueeze(0).to(device)
