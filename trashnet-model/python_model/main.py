@@ -13,7 +13,6 @@ dirText=''
 dir=root + '\\data\\unseen\\metal1.jpg'
 
 def predict():
-    global pred, dir
     res, _, img = test.predictSingleUnseen(dir)
     print(res)
     pred.setText(res)
@@ -22,7 +21,7 @@ def predict():
     preview.show()
 
 def applyDir():
-    global dirText, dir, pred
+    global dir
     [_dir, _] = QFileDialog.getOpenFileName(None, 'Select image:', '.', "Image files (*.jpg)")
     dir=_dir
     dirText.setText('Current dir: ' + dir)
@@ -41,7 +40,7 @@ window.setGeometry(QRect(0,0, 960, 720))
 preview=QLabel()
 preview.setPixmap(QPixmap(root + '\\data\\unseen\\metal1.jpg'))
 preview.setScaledContents(True)
-preview.setStyleSheet("QLabel { background-color: black; border: 2px dashed red; height: 450px; aspect-ratio: 3 / 2; max-width: 600px;}")
+preview.setStyleSheet("QLabel { background-color: black; border: 2px dashed red; height: 450px; aspect-ratio: 3 / 2; max-width: 600px; max-height: 600px;}")
 
 dirText=QLabel()
 dirText.setText('Current dir: '+ root + '\\data\\unseen\\metal1.jpg')

@@ -84,7 +84,6 @@ def predict(dir=root+'\\data\\dataset'):
    return idx2class[pred_class], idx2class[single_lbl.item()], single_img
 
 def predictSingleUnseen(imgdir):
-   global root, model, device
    #Test dataset
    image_transforms =  transforms.Compose([transforms.Resize((250, 250)),transforms.ToTensor()])
    image = image_transforms(Image.open(imgdir)).unsqueeze(0).to(device)
