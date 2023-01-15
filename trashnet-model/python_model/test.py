@@ -90,6 +90,7 @@ def predictSingleUnseen(imgdir):
 
    #Load the image and predict
    pred = torch.log_softmax(model(image), dim = 1)
+   print(pred)
    _, pred_class = torch.max(pred, dim = 1)
    
    pred_class = pred_class.item()
